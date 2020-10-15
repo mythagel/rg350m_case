@@ -4,7 +4,7 @@ rg350m_x = 146.0;
 rg350m_y = 18.5;
 rg350m_z = 74.6;
 
-difference() {
+module case() translate([0,1.3,0]) difference() {
     // Outer shell
     translate([0,-1.3,0]) // fudge factor
     union() {
@@ -58,4 +58,26 @@ difference() {
     }
 }
 
+module felt_pattern() {
+    // bottom
+    translate([-(rg350m_x-1)/2, -(rg350m_y-1)/2]) square([rg350m_x-1, rg350m_y-1]);
+    
+    // back face
+    translate([0,0.01])
+    translate([-74/2, (rg350m_y-1)/2]) square([74, rg350m_z-2]);
+    
+    // front face
+    translate([0,-0.01])
+    translate([-84/2, -(rg350m_z-2) - (rg350m_y-1)/2]) square([84, rg350m_z-2]);
+
+    translate([-(rg350m_z-2)/2 - (rg350m_x-1)/2 - (rg350m_z-2)/2 - 0.01, -(rg350m_y-1)/2]) square([rg350m_z-2, rg350m_y-1]);
+
+    translate([-(rg350m_z-2)/2 + (rg350m_x-1)/2 + (rg350m_z-2)/2 + 0.01, -(rg350m_y-1)/2]) square([rg350m_z-2, rg350m_y-1]);
+}
+
+//translate([0,0,5]) case();
+
+rotate([0,0,60]) felt_pattern();    // rotate to fit A4 page
+
 //translate([-rg350m_x/2, -rg350m_y/2, 3.01]) cube([rg350m_x, rg350m_y, rg350m_z]);
+
