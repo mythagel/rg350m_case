@@ -8,76 +8,66 @@ module case() translate([0,1.3,0]) difference() {
     // Outer shell
     translate([0,-1.3,0]) // fudge factor
     union() {
-        x = rg350m_x+10 - 2.5*2;
-        y = rg350m_y+10 - 2.5*2;
-        z = rg350m_z+3+1 - 2.5*2;
+        r = 3;
+        x = rg350m_x+10 - r*2;
+        y = rg350m_y+10 - r*2;
+        z = rg350m_z+3+1 - r*2;
 
-        translate([-x/2, -y/2, 2.5]) minkowski() {
+        translate([-x/2, -y/2, r]) minkowski() {
             cube([x, y, z]);
-            sphere(r=2.5);
+            sphere(r=r);
         }
     }
 
     // Button clearance
     btn_clear_width = 24 + 2;
-    translate([4.5 - 1, -rg350m_y/2 + 9 - 4.5, 1.26])    //apothem
-    translate([-rg350m_x/2 + btn_clear_width/2, 0, btn_clear_width/2]) union() {
-        hull() {
-            rotate([90,0,0]) cylinder(r=btn_clear_width/2, h=9, $fn=6);
-            translate([0,0,80]) rotate([90,0,0]) cylinder(r=btn_clear_width/2, h=9, $fn=6);
-        }
-    }
-    translate([-4.5+1, -rg350m_y/2 + 9 - 4.5, 1.26])    //apothem
-    translate([rg350m_x/2 - btn_clear_width/2, 0, btn_clear_width/2]) union() {
-        hull() {
-            rotate([90,0,0]) cylinder(r=btn_clear_width/2, h=9, $fn=6);
-            translate([0,0,80]) rotate([90,0,0]) cylinder(r=btn_clear_width/2, h=9, $fn=6);
-        }
-    }
+    translate([4.5 - 1, -rg350m_y/2 + 9 - 4.5, 0])
+        translate([-rg350m_x/2 + btn_clear_width/2, 0, 3])
+            translate([-btn_clear_width/2,-9,0]) cube([btn_clear_width, 9, 80]);
+    translate([-4.5+1, -rg350m_y/2 + 9 - 4.5, 0])
+        translate([rg350m_x/2 - btn_clear_width/2, 0, 3])
+            translate([-btn_clear_width/2,-9,0]) cube([btn_clear_width, 9, 80]);
 
     // Grip clearance
-    translate([rg350m_x/2 - 20/2 - (16-1),0,1.7])    // apothem
-    translate([0, rg350m_y/2 + 0.5/2 + 1.5, 20/2]) union() {
-        hull() {
-            rotate([90,0,0]) cylinder(r=20/2, h=5, $fn=6);
-            translate([0,0,80]) rotate([90,0,0]) cylinder(r=20/2, h=5, $fn=6);
-        }
-    }
-    translate([-rg350m_x/2 + 20/2 + (16-1),0,1.7])    //apothem
-    translate([0, rg350m_y/2 + 0.5/2 + 1.5, 20/2]) union() {
-        hull() {
-            rotate([90,0,0]) cylinder(r=20/2, h=5, $fn=6);
-            translate([0,0,80]) rotate([90,0,0]) cylinder(r=20/2, h=5, $fn=6);
-        }
-    }
+    translate([rg350m_x/2 - 20/2 - (16-1),0,0])
+        translate([0, rg350m_y/2 + 0.5/2 + 1.5, 3])
+            translate([-20/2,-5,0]) cube([20, 5, 80]);
+    translate([-rg350m_x/2 + 20/2 + (16-1),0,0])
+        translate([0, rg350m_y/2 + 0.5/2 + 1.5, 3])
+            translate([-20/2,-5,0]) cube([20, 5, 80]);
     
-    // Felt clearance - 1mm each side
+    // Felt clearance - 1.5mm each side
     union() {
-        translate([-100/2,-(rg350m_y+2)/2, 3]) cube([100, rg350m_y+2, rg350m_z+2]);
-        translate([-(rg350m_x+2)/2, -(rg350m_y+0.5)/2, 3]) cube([rg350m_x+2,(rg350m_y+0.5), rg350m_z+2]);
+        fx = rg350m_x+3;
+        fy = rg350m_y+3;
+        fz = rg350m_z+3;
+        translate([-100/2,-fy/2, 3]) cube([100, fy, fz]);
+        translate([-fx/2, -fy/2, 3]) cube([fx,fy, fz]);
     }
 }
 
 module felt_pattern() {
     // bottom
-    translate([-(rg350m_x-1)/2, -(rg350m_y-1)/2]) square([rg350m_x-1, rg350m_y-1]);
+    translate([-rg350m_x/2, -rg350m_y/2]) square([rg350m_x, rg350m_y]);
     
     // back face
     translate([0,0.01])
-    translate([-74/2, (rg350m_y-1)/2]) square([74, rg350m_z-2]);
+    translate([-74/2, rg350m_y/2]) square([74, rg350m_z]);
     
     // front face
     translate([0,-0.01])
-    translate([-84/2, -(rg350m_z-2) - (rg350m_y-1)/2]) square([84, rg350m_z-2]);
+    translate([-84/2, -rg350m_z - rg350m_y/2]) square([84, rg350m_z]);
 
-    translate([-(rg350m_z-2)/2 - (rg350m_x-1)/2 - (rg350m_z-2)/2 - 0.01, -(rg350m_y-1)/2]) square([rg350m_z-2, rg350m_y-1]);
+    translate([-rg350m_z/2 - rg350m_x/2 - rg350m_z/2 - 0.01, -rg350m_y/2]) square([rg350m_z, rg350m_y]);
 
-    translate([-(rg350m_z-2)/2 + (rg350m_x-1)/2 + (rg350m_z-2)/2 + 0.01, -(rg350m_y-1)/2]) square([rg350m_z-2, rg350m_y-1]);
+    translate([-rg350m_z/2 + rg350m_x/2 + rg350m_z/2 + 0.01, -rg350m_y/2]) square([rg350m_z, rg350m_y]);
 }
 
-//translate([0,0,5]) case();
+//translate([0,0,-50])
+    case();
 
-rotate([0,0,60]) felt_pattern();    // rotate to fit A4 page
+//rotate([0,0,60])
+//    felt_pattern();    // rotated to fit A4 page
 
 //translate([-rg350m_x/2, -rg350m_y/2, 3.01]) cube([rg350m_x, rg350m_y, rg350m_z]);
 
