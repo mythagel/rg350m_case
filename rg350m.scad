@@ -8,10 +8,10 @@ module case() translate([0,1.3,0]) difference() {
     // Outer shell
     translate([0,-1.3,0]) // fudge factor
     union() {
-        r = 3;
-        x = rg350m_x+10 - r*2;
-        y = rg350m_y+10 - r*2;
-        z = rg350m_z+3+1 - r*2;
+        r = 5;
+        x = rg350m_x+14 - r*2;
+        y = rg350m_y+14 - r*2;
+        z = rg350m_z+3+3 - r*2;
 
         translate([-x/2, -y/2, r]) minkowski() {
             cube([x, y, z]);
@@ -21,10 +21,10 @@ module case() translate([0,1.3,0]) difference() {
 
     // Button clearance
     btn_clear_width = 24 + 2;
-    translate([4.5 - 1, -rg350m_y/2 + 9 - 4.5, 0])
+    translate([4.5 - 1, -rg350m_y/2 + 9 - 5, 0])
         translate([-rg350m_x/2 + btn_clear_width/2, 0, 3])
             translate([-btn_clear_width/2,-9,0]) cube([btn_clear_width, 9, 80]);
-    translate([-4.5+1, -rg350m_y/2 + 9 - 4.5, 0])
+    translate([-4.5+1, -rg350m_y/2 + 9 - 5, 0])
         translate([rg350m_x/2 - btn_clear_width/2, 0, 3])
             translate([-btn_clear_width/2,-9,0]) cube([btn_clear_width, 9, 80]);
 
@@ -36,11 +36,11 @@ module case() translate([0,1.3,0]) difference() {
         translate([0, rg350m_y/2 + 0.5/2 + 1.5, 3])
             translate([-20/2,-5,0]) cube([20, 5, 80]);
     
-    // Felt clearance - 1.5mm each side
+    // Felt clearance - 2.25mm each side
     union() {
-        fx = rg350m_x+3;
-        fy = rg350m_y+3;
-        fz = rg350m_z+3;
+        fx = rg350m_x+4.5;
+        fy = rg350m_y+4.5;
+        fz = rg350m_z+4.5;
         translate([-100/2,-fy/2, 3]) cube([100, fy, fz]);
         translate([-fx/2, -fy/2, 3]) cube([fx,fy, fz]);
     }
