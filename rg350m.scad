@@ -5,7 +5,7 @@ rg350m_y = 18.5;
 rg350m_z = 74.6;
 
 module catch(i) {
-    l = (20+(rg350m_y+14)+20) - 1;
+    l = (20+(rg350m_y+14)+20) - 6;
     rotate([0,-90,0]) difference() {
         union() {
             hull() {
